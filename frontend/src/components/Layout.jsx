@@ -9,6 +9,7 @@ export default function Layout() {
   const [search, setSearch] = useState('')
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const apiDocsUrl = import.meta.env.VITE_API_DOCS_URL || 'http://127.0.0.1:8000/docs'
 
   const submitSearch = (event) => {
     event.preventDefault()
@@ -64,7 +65,7 @@ export default function Layout() {
           </div>
           <div><h4>Compra</h4><Link to="/catalogo">Todos los productos</Link><Link to="/catalogo?categoria=tecnologia">Tecnología</Link><Link to="/catalogo?categoria=hogar">Hogar</Link></div>
           <div><h4>Ayuda</h4><a href="#envios">Envíos y entregas</a><a href="#cambios">Cambios y devoluciones</a><a href="#contacto">Contáctanos</a></div>
-          <div><h4>Proyecto</h4><Link to="/admin">Panel administrativo</Link><a href="http://127.0.0.1:8000/docs" target="_blank" rel="noreferrer">Documentación API</a><span>Demo de portafolio</span></div>
+          <div><h4>Proyecto</h4><Link to="/admin">Panel administrativo</Link><a href={apiDocsUrl} target="_blank" rel="noreferrer">Documentación API</a><span>Demo de portafolio</span></div>
         </div>
         <div className="container footer-bottom"><span>© 2026 NovaMarket. Proyecto demostrativo.</span><span>Hecho con React · FastAPI · PostgreSQL</span></div>
       </footer>

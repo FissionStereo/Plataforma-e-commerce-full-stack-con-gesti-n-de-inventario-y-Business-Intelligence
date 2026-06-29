@@ -84,6 +84,17 @@ cd backend
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
+## Publicación en GitHub Pages
+
+El frontend se publica automáticamente con GitHub Actions al actualizar `main`. GitHub Pages solo aloja archivos estáticos, por lo que la API FastAPI debe desplegarse en un servicio externo.
+
+Configura estas variables del repositorio en **Settings > Secrets and variables > Actions > Variables**:
+
+- `NOVAMARKET_API_URL`: URL pública de la API terminada en `/api`.
+- `NOVAMARKET_API_DOCS_URL`: URL pública de Swagger terminada en `/docs`.
+
+En el servidor de la API, `CORS_ORIGINS` debe contener la URL completa de GitHub Pages. Para desarrollo local no hace falta modificarla.
+
 ## ETL para Power BI
 
 Con la base creada, ejecuta:

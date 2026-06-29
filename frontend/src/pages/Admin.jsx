@@ -12,7 +12,7 @@ import {
   Area, AreaChart, Bar, BarChart, CartesianGrid, Cell, Pie, PieChart,
   ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts'
-import { adminRequest, formatMoney, loginAdmin } from '../api'
+import { API_BASE, adminRequest, formatMoney, loginAdmin } from '../api'
 import ProductVisual from '../components/ProductVisual'
 
 const chartColors = ['#6c5ce7', '#21c7a8', '#ff8b66', '#f3a712', '#ea4c89']
@@ -164,7 +164,7 @@ export default function Admin() {
   const addProduct = async (payload) => { try { await adminRequest('/products', token, { method: 'POST', body: JSON.stringify(payload) }); setProductModal(false); showToast('Producto publicado en el catálogo'); await loadAll() } catch (error) { showToast(error.message) } }
   const changeStatus = async (orderId, status) => { const updated = await adminRequest(`/orders/${orderId}/status`, token, { method: 'PATCH', body: JSON.stringify({ status }) }); setOrders((rows) => rows.map((row) => row.id === orderId ? updated : row)); setDashboard((current) => current ? { ...current, recent_orders: current.recent_orders.map((row) => row.id === orderId ? updated : row) } : current); showToast(`Pedido actualizado a ${statusLabels[status]}`) }
   const saveSettings = async (payload) => { const updated = await adminRequest('/settings', token, { method: 'PUT', body: JSON.stringify(payload) }); setSettings(updated); showToast('Configuración guardada') }
-  const exportData = async () => { const response = await fetch('/api/admin/bi/export', { headers: { Authorization: `Bearer ${token}` } }); const blob = await response.blob(); const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'novamarket_ventas.csv'; anchor.click(); URL.revokeObjectURL(url); showToast('Reporte CSV descargado') }
+  const exportData = async () => { const response = await fetch(`${API_BASE}/admin/bi/export`, { headers: { Authorization: `Bearer ${token}` } }); const blob = await response.blob(); const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = 'novamarket_ventas.csv'; anchor.click(); URL.revokeObjectURL(url); showToast('Reporte CSV descargado') }
 
   const searchResults = useMemo(() => {
     if (!globalQuery.trim()) return []
