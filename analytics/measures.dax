@@ -1,0 +1,47 @@
+-- Tabla: fact_sales
+
+Ventas Totales =
+CALCULATE(
+    SUM(fact_sales[subtotal]),
+    fact_sales[status] <> "cancelled"
+)
+
+Unidades Vendidas =
+CALCULATE(
+    SUM(fact_sales[quantity]),
+    fact_sales[status] <> "cancelled"
+)
+
+Utilidad Bruta =
+CALCULATE(
+    SUM(fact_sales[gross_profit]),
+    fact_sales[status] <> "cancelled"
+)
+
+Margen Bruto % =
+DIVIDE([Utilidad Bruta], [Ventas Totales], 0)
+
+Pedidos =
+CALCULATE(
+    DISTINCTCOUNT(fact_sales[order_id]),
+    fact_sales[status] <> "cancelled"
+)
+
+Ticket Promedio =
+DIVIDE([Ventas Totales], [Pedidos], 0)
+
+Ventas Mes Anterior =
+CALCULATE([Ventas Totales], DATEADD(dim_date[date], -1, MONTH))
+
+Crecimiento Mensual % =
+DIVIDE([Ventas Totales] - [Ventas Mes Anterior], [Ventas Mes Anterior], 0)
+
+Valor de Inventario =
+SUM(inventory_snapshot[stock_value])
+
+Productos con Stock Bajo =
+CALCULATE(
+    COUNTROWS(inventory_snapshot),
+    inventory_snapshot[status] = "Stock bajo"
+)
+
