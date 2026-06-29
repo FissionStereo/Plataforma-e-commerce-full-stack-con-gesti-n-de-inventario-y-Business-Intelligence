@@ -1,0 +1,16 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Backend
+backend/.venv/
+backend/__pycache__/
+backend/**/*.pyc
+backend/novamarket.db
+analytics/output/
+
+# Local configuration
+.env
+.DS_Store
+Thumbs.db
+work-*.log

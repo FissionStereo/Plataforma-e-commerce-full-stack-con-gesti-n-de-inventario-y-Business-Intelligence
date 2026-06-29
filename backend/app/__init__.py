@@ -1,0 +1,2 @@
+"""NovaMarket API package."""
+
